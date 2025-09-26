@@ -1,26 +1,27 @@
 package org.acme.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
-public class Produto {
+public class Produto extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
-    private String descricao;
     private Double preco;
-    private Integer estoque;
+
+    @ManyToOne
+    @JoinColumn(name = "estoque_id") // chave estrangeira
+    private Estoque estoque;
 
     // Getters e Setters
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -28,28 +29,24 @@ public class Produto {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public Double getPreco() {
         return preco;
     }
+
     public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public Integer getEstoque() {
+    public Estoque getEstoque() {
         return estoque;
     }
-    public void setEstoque(Integer estoque) {
+
+    public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
     }
 }

@@ -1,0 +1,143 @@
+@startuml
+'============================
+' Diagrama de classes detalhado
+'============================
+
+'--------------------------------
+' Herança: Usuario é superclasse
+'--------------------------------
+class Usuario {
+  - Long id
+  - String nome
+  - String email
+  - String senha
+  --
+  + cadastrar()
+  + atualizar()
+  + deletar()
+  + buscarPorId(id: Long)
+}
+
+class Cliente {
+  - String endereco
+  --
+  + cadastrar()
+  + atualizar()
+  + deletar()
+  + buscarPorId(id: Long)
+}
+
+class Administrador {
+  - String nivelAcesso
+  --
+  + cadastrarProduto()
+  + atualizarProduto()
+  + deletarProduto()
+  + gerenciarClientes()
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Administrador
+
+'--------------------------------
+' Categoria
+'--------------------------------
+class Categoria {
+  - Long id
+  - String nome
+  --
+  + cadastrar()
+  + atualizar()
+  + deletar()
+  + buscarPorId(id: Long)
+}
+
+'--------------------------------
+' Produtos
+'--------------------------------
+class Produto {
+  - Long id
+  - String nome
+  - Double preco
+  - Integer quantidadeEstoque
+  --
+  + cadastrar()
+  + atualizar()
+  + deletar()
+  + buscarPorId(id: Long)
+}
+
+Produto --> Categoria : pertence a
+
+'--------------------------------
+' Estoque
+'--------------------------------
+class Estoque {
+  - Long id
+  - Integer quantidade
+  --
+  + atualizarQuantidade()
+  + verificarEstoque()
+}
+
+Estoque --> Produto : controla
+
+'--------------------------------
+' Pedido
+'--------------------------------
+class Pedido {
+  - Long id
+  - String status
+  - Date data
+  - Double valorTotal
+  --
+  + criar()
+  + atualizar()
+  + cancelar()
+  + buscarPorId(id: Long)
+}
+
+Pedido --> Cliente : feito por
+Pedido "0..*" --> "0..*" Produto : contem
+
+'--------------------------------
+' Pagamento
+'--------------------------------
+class Pagamento {
+  - Long id
+  - Double valor
+  - String metodo
+  - Date data
+  --
+  + processar()
+  + cancelar()
+  + buscarPorPedido(pedidoId: Long)
+}
+
+Pagamento --> Pedido : referente a
+
+'--------------------------------
+' Fornecedor
+'--------------------------------
+class Fornecedor {
+  - Long id
+  - String nome
+  - String cnpj
+  - String telefone
+  --
+  + cadastrar()
+  + atualizar()
+  + deletar()
+  + buscarPorId(id: Long)
+}
+
+Fornecedor --> Produto : fornece
+
+'--------------------------------
+' Relações adicionais
+'--------------------------------
+Cliente --> Pedido
+Produto --> Estoque
+Produto --> Fornecedor
+
+@enduml
