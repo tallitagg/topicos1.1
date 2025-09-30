@@ -1,6 +1,6 @@
 package org.acme.resources;
-package org.acme.resource;
 
+import jakarta.ws.rs.client.Client;
 import org.acme.model.Cliente;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;

@@ -1,5 +1,4 @@
 package org.acme.resources;
-package org.acme.resource;
 
 import org.acme.model.Estoque;
 import org.acme.repository.EstoqueRepository;

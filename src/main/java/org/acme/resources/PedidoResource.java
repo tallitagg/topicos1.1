@@ -1,5 +1,4 @@
 package org.acme.resources;
-package org.acme.resource;
 
 import org.acme.model.Pedido;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;

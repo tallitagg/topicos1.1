@@ -1,5 +1,4 @@
 package org.acme.resources;
-package org.acme.resource;
 
 import org.acme.model.Categoria;
 import org.acme.repository.CategoriaRepository;
