@@ -1,40 +1,38 @@
 package org.acme.model;
 
 import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Pedido extends PanacheEntityBase {
+@Table(name = "pedido")
+public class Pedido extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(nullable = false)
     private LocalDateTime dataPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_pedido_cliente")
+    )
     private Cliente cliente;
 
-    @ManyToMany
-    @JoinTable(
-        name = "pedido_produto",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "produto_id")
-    )
-    private List<Produto> produtos;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedido> itens;
 
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Pagamento pagamento;
+
+    @Column(nullable = false)
     private Double total;
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @PrePersist
+    @PreUpdate
+    public void recalcularTotal() {
+        this.total = itens.stream()
+                .mapToDouble(i -> i.getPrecoUnitario() * i.getQuantidade())
+                .sum();
     }
 
     public LocalDateTime getDataPedido() {
@@ -53,12 +51,20 @@ public class Pedido extends PanacheEntityBase {
         this.cliente = cliente;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<ItemPedido> getItens() {
+        return itens;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
     public Double getTotal() {

@@ -1,28 +1,22 @@
 package org.acme.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity
-public class Categoria extends PanacheEntityBase {
+@Table(name = "categoria", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_categoria_nome", columnNames = "nome")
+})
+public class Categoria extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank
+    @Column(nullable = false, length = 80)
     private String nome;
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToMany(mappedBy = "categorias")
+    private List<Produto> produtos;
 
     public String getNome() {
         return nome;
@@ -30,5 +24,13 @@ public class Categoria extends PanacheEntityBase {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

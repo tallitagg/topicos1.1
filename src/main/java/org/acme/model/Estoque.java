@@ -1,30 +1,28 @@
 package org.acme.model;
 
-import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
-public class Estoque extends PanacheEntityBase {
+@Table(name = "estoque")
+public class Estoque extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank
+    @Column(nullable = false, length = 120)
     private String local;
+
+    @NotNull
+    @Column(nullable = false)
     private Integer quantidade;
 
-    @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "estoque")
     private List<Produto> produtos;
-
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getLocal() {
         return local;

@@ -1,32 +1,30 @@
 package org.acme.model;
 
 import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import org.acme.model.enums.StatusPagamento;
 
 @Entity
-public class Pagamento extends PanacheEntityBase {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "pagamento")
+public class Pagamento extends DefaultEntity {
 
     @OneToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id",  nullable = false,
+                foreignKey = @ForeignKey(name = "fk_pagamento_pedido"))
     private Pedido pedido;
 
+    @NotNull
+    @PositiveOrZero
+    @Column(nullable = false)
     private Double valor;
 
-    private String formaPagamento; // Ex: "Cartão", "Pix", "Boleto"
-    private String status;         // Ex: "Pendente", "Pago", "Cancelado"
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private StatusPagamento status;
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(length = 30)
+    private String metodo;
 
     public Pedido getPedido() {
         return pedido;
@@ -44,19 +42,19 @@ public class Pagamento extends PanacheEntityBase {
         this.valor = valor;
     }
 
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public String getStatus() {
+    public StatusPagamento getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusPagamento status) {
         this.status = status;
+    }
+
+    public String getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(String metodo) {
+        this.metodo = metodo;
     }
 }

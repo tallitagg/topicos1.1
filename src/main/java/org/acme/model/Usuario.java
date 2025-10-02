@@ -1,28 +1,34 @@
 package org.acme.model;
 
-import java.time.LocalDate;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.acme.model.enums.Sexo;
 
 @Entity
+@Table(name = "usuario", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_usuario_email", columnNames = "email"),
+        @UniqueConstraint(name = "uk_usuario_cpf", columnNames = "cpf")
+})
 public class Usuario extends DefaultEntity {
-    @Column(nullable = false)
+    @Column(nullable = false, length = 120)
     private String nome;
 
-    @Column(unique = true)
+    @Email
+    @NotBlank
+    @Column(unique = true, length = 160)
     private String email;
 
     @Column(nullable = false) // Impede valores nulos no banco
     @NotBlank(message = "A senha não pode ser nula ou vazia.") // Valida no backend
     private String senha;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 12)
     private Sexo sexo;
 
+    @NotBlank
+    @Column(nullable = false, length = 14)
     private String cpf;
 
     public String getNome() {

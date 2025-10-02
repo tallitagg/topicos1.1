@@ -1,29 +1,34 @@
 package org.acme.model;
 
 import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity
-public class Fornecedor extends PanacheEntityBase {
+@Table(name = "fornecedor", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_fornecedor_cnpj", columnNames = "cnpj")
+})
+public class Fornecedor extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank
+    @Column(nullable = false, length = 160)
     private String nome;
+
+    @NotBlank
+    @Column(nullable = false, length = 18)
     private String cnpj;
+
+    @NotBlank
+    @Column(nullable = false, length = 20)
     private String telefone;
+
+    @NotBlank
+    @Column(nullable = false, length = 100)
     private String email;
-    private String endereco;
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "fornecedor")
+    private List<Produto> produtos;
 
     public String getNome() {
         return nome;
@@ -57,11 +62,11 @@ public class Fornecedor extends PanacheEntityBase {
         this.email = email;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }
