@@ -1,10 +1,10 @@
 package org.acme.dto;
 
-public record ClienteDTO(
+import java.util.List;
 
-        String nome,
-        String email,
-        String senha,
-        String endereco
+public record ClienteDTO(
+        UsuarioDTO usuario,
+        List<ProdutoDTO> listaDesejo,
+        List<PedidoDTO> pedidos
 ) {
 }

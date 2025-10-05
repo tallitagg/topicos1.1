@@ -24,7 +24,7 @@ public class Pagamento extends DefaultEntity {
     private StatusPagamento status;
 
     @Column(length = 30)
-    private String metodo;
+    private String metodo; // Alterar o metodo pagamento para enum
 
     public Pedido getPedido() {
         return pedido;
