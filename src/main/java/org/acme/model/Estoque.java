@@ -1,12 +1,8 @@
 package org.acme.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 @Entity
@@ -21,8 +17,9 @@ public class Estoque extends DefaultEntity {
     @Column(nullable = false)
     private Integer quantidade;
 
-    @OneToMany(mappedBy = "estoque")
-    private List<Produto> produtos;
+    // lado inverso da relação (o dono é ProdutoVariacao.estoque)
+    @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProdutoVariacao> variacoes;
 
     public String getLocal() {
         return local;
@@ -40,11 +37,11 @@ public class Estoque extends DefaultEntity {
         this.quantidade = quantidade;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<ProdutoVariacao> getVariacoes() {
+        return variacoes;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setVariacoes(List<ProdutoVariacao> variacoes) {
+        this.variacoes = variacoes;
     }
 }

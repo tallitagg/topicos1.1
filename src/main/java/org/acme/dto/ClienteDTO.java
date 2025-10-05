@@ -1,8 +1,10 @@
+package org.acme.dto;
+
 public record ClienteDTO(
 
         String nome,
         String email,
         String senha,
-        String endereco;
+        String endereco
 ) {
 }

@@ -16,46 +16,46 @@ public class ClienteResource {
     public List<Cliente> listar() {
         return Cliente.listAll();
     }
-
-    @GET
-    @Path("/{id}")
-    public Cliente buscarPorId(@PathParam("id") Long id) {
-        return Cliente.findById(id);
-    }
-
-    @POST
-    @Transactional
-    public Cliente criar(Cliente cliente) {
-        cliente.persist();
-        return cliente;
-    }
-
-    @PUT
-    @Path("/{id}")
-    @Transactional
-    public Cliente atualizar(@PathParam("id") Long id, Cliente clienteAtualizado) {
-        Cliente cliente = Cliente.findById(id);
-        if (cliente == null) {
-            throw new NotFoundException();
-        }
-
-        cliente.setNome(clienteAtualizado.getNome());
-        cliente.setEmail(clienteAtualizado.getEmail());
-        cliente.setSenha(clienteAtualizado.getSenha());
-        cliente.setEndereco(clienteAtualizado.getEndereco());
-
-        cliente.persist();
-        return cliente;
-    }
-
-    @DELETE
-    @Path("/{id}")
-    @Transactional
-    public void deletar(@PathParam("id") Long id) {
-        Cliente cliente = Cliente.findById(id);
-        if (cliente == null) {
-            throw new NotFoundException();
-        }
-        cliente.delete();
-    }
+//
+//    @GET
+//    @Path("/{id}")
+//    public Cliente buscarPorId(@PathParam("id") Long id) {
+//        return Cliente.findById(id);
+//    }
+//
+//    @POST
+//    @Transactional
+//    public Cliente criar(Cliente cliente) {
+//        cliente.persist();
+//        return cliente;
+//    }
+//
+//    @PUT
+//    @Path("/{id}")
+//    @Transactional
+//    public Cliente atualizar(@PathParam("id") Long id, Cliente clienteAtualizado) {
+//        Cliente cliente = Cliente.findById(id);
+//        if (cliente == null) {
+//            throw new NotFoundException();
+//        }
+//
+//        cliente.setNome(clienteAtualizado.getNome());
+//        cliente.setEmail(clienteAtualizado.getEmail());
+//        cliente.setSenha(clienteAtualizado.getSenha());
+//        cliente.setEndereco(clienteAtualizado.getEndereco());
+//
+//        cliente.persist();
+//        return cliente;
+//    }
+//
+//    @DELETE
+//    @Path("/{id}")
+//    @Transactional
+//    public void deletar(@PathParam("id") Long id) {
+//        Cliente cliente = Cliente.findById(id);
+//        if (cliente == null) {
+//            throw new NotFoundException();
+//        }
+//        cliente.delete();
+//    }
 }

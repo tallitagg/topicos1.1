@@ -33,12 +33,32 @@ public class ItemPedido extends DefaultEntity {
     @Column(nullable = false)
     private Double precoUnitario;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "produto_id", foreignKey = @ForeignKey(name = "fk_item_produto"))
+    private Produto produto;
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public ProdutoVariacao getVariacao() {
+        return variacao;
+    }
+
+    public void setVariacao(ProdutoVariacao variacao) {
+        this.variacao = variacao;
     }
 
     public Integer getQuantidade() {
@@ -55,13 +75,5 @@ public class ItemPedido extends DefaultEntity {
 
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
-    }
-
-    public ProdutoVariacao getVariacao() {
-        return variacao;
-    }
-
-    public void setVariacao(ProdutoVariacao variacao) {
-        this.variacao = variacao;
     }
 }

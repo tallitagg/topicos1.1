@@ -30,7 +30,7 @@ public class Produto extends DefaultEntity {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoVariacao> variacoes;
 
-    @OneToMany(mappedBy = "produtos")
+    @OneToMany(mappedBy = "produto")
     private List<ItemPedido> itens;
 
     public String getNome() {
@@ -39,6 +39,14 @@ public class Produto extends DefaultEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Fornecedor getFornecedor() {
@@ -57,27 +65,19 @@ public class Produto extends DefaultEntity {
         this.categorias = categorias;
     }
 
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = itens;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public List<ProdutoVariacao> getVariacoes() {
         return variacoes;
     }
 
     public void setVariacoes(List<ProdutoVariacao> variacoes) {
         this.variacoes = variacoes;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
     }
 }

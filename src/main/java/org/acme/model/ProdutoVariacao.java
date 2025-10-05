@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.acme.model.enums.Material;
-
 import java.util.List;
 
 @Entity
@@ -14,16 +13,17 @@ import java.util.List;
         @UniqueConstraint(name = "uk_variacao_sku", columnNames = "sku")
 })
 public class ProdutoVariacao extends DefaultEntity {
+
     @ManyToOne(optional = false)
-    @JoinColumn(name = "produto_id", nullable = false, foreignKey = @ForeignKey(name = "fk_variacao_produto"))
+    @JoinColumn(name = "produto_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_variacao_produto"))
     private Produto produto;
 
     @NotBlank
     @Column(nullable = false, length = 40)
     private String sku;
 
-    @NotNull
-    @Positive
+    @NotNull @Positive
     @Column(nullable = false)
     private Integer capacidadeMl;
 
@@ -41,16 +41,16 @@ public class ProdutoVariacao extends DefaultEntity {
     @PositiveOrZero
     private Integer retencaoFrioHoras;
 
-    private Boolean bpaFree; // Ex.: true/false
-    private String tipoTampa; //Ex.: rosca, flip, trava, canudo...
+    private Boolean bpaFree;
+    private String tipoTampa;
     private Double pesoKg;
-    private String dimensoes; //Ex.: "26x7x7 cm
+    private String dimensoes;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull @PositiveOrZero
     @Column(nullable = false)
     private Double preco;
 
+    // ESTE CAMPO PRECISA EXISTIR PARA CASAR COM mappedBy="estoque" EM Estoque
     @ManyToOne(optional = false)
     @JoinColumn(name = "estoque_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_variacao_estoque"))
