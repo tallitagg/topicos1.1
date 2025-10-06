@@ -3,6 +3,7 @@ package org.acme.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.acme.model.enums.MetodoPagamento;
 import org.acme.model.enums.StatusPagamento;
 
 @Entity
@@ -23,8 +24,9 @@ public class Pagamento extends DefaultEntity {
     @Column(nullable = false, length = 20)
     private StatusPagamento status;
 
-    @Column(length = 30)
-    private String metodo; // Alterar o metodo pagamento para enum
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 12)
+    private MetodoPagamento metodo;
 
     public Pedido getPedido() {
         return pedido;
@@ -50,11 +52,11 @@ public class Pagamento extends DefaultEntity {
         this.status = status;
     }
 
-    public String getMetodo() {
+    public MetodoPagamento getMetodo() {
         return metodo;
     }
 
-    public void setMetodo(String metodo) {
+    public void setMetodo(MetodoPagamento metodo) {
         this.metodo = metodo;
     }
 }
