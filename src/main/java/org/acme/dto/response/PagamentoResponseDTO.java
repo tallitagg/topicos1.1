@@ -1,7 +1,6 @@
-package org.acme.dto;
+package org.acme.dto.response;
 
 import org.acme.model.Pagamento;
-import org.acme.model.Pedido;
 import org.acme.model.enums.StatusPagamento;
 
 public record PagamentoResponseDTO(

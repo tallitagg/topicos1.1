@@ -1,6 +1,5 @@
-package org.acme.dto;
+package org.acme.dto.response;
 
-import org.acme.model.Produto;
 import org.acme.model.ProdutoVariacao;
 import org.acme.model.enums.Material;
 
